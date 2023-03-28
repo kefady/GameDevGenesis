@@ -19,6 +19,8 @@ namespace Player
         private Rigidbody2D _rigidbody2D;
 
         private bool _isJumping;
+        private bool _hasJump;
+        private bool _isFalling;
 
         private Vector2 _movement;
 
@@ -29,11 +31,11 @@ namespace Player
 
         private void Update()
         {
-            if (_isJumping)
-            {
-                ResetJump();
-            }
+            if (_isJumping) ResetJump();
 
+            if (_isFalling) ResetFall();
+
+            UpdateFall();
             UpdateAnimation();
         }
 
@@ -60,7 +62,7 @@ namespace Player
 
         public void Jump()
         {
-            if (!_isJumping)
+            if (!_isJumping && _hasJump)
             {
                 _isJumping = true;
                 _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _jumpForce);
@@ -74,12 +76,33 @@ namespace Player
                 _isJumping = false;
             }
         }
+        
+        private void UpdateFall()
+        {
+            if (_rigidbody2D.velocity.y < 0)
+            {
+                _isFalling = true;
+                _hasJump = false;
+                return;
+            }
+
+            _hasJump = true;
+        }
+
+        private void ResetFall()
+        {
+            if (_rigidbody2D.velocity.y >= 0)
+            {
+                _isFalling = false;
+            }
+        }
 
         private void UpdateAnimation()
         {
             _animator.PlayAnimation(AnimationType.Idle, true);
             _animator.PlayAnimation(AnimationType.Run, _movement.magnitude > 0);
             _animator.PlayAnimation(AnimationType.Jump, _isJumping);
+            _animator.PlayAnimation(AnimationType.Fall, _isFalling);
         }
     }
 }
