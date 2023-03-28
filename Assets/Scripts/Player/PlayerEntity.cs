@@ -1,3 +1,5 @@
+using System;
+using Player.PlayerAnimation;
 using UnityEngine;
 
 namespace Player
@@ -5,6 +7,8 @@ namespace Player
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerEntity : MonoBehaviour
     {
+        [SerializeField] private AnimatorController _animator;
+
         [Header("HorizontalMovement")] [SerializeField]
         private float _horizontalSpeed;
 
@@ -13,8 +17,10 @@ namespace Player
         [Header("Jump")] [SerializeField] private float _jumpForce;
 
         private Rigidbody2D _rigidbody2D;
-        
+
         private bool _isJumping;
+
+        private Vector2 _movement;
 
         private void Start()
         {
@@ -25,23 +31,17 @@ namespace Player
         {
             if (_isJumping)
             {
-                JumpReset();
+                ResetJump();
             }
+
+            UpdateAnimation();
         }
 
         public void MoveHorizontally(float direction)
         {
+            _movement.x = direction;
             SetDirection(direction);
             _rigidbody2D.velocity = new Vector2(direction * _horizontalSpeed, _rigidbody2D.velocity.y);
-        }
-
-        public void Jump()
-        {
-            if (!_isJumping)
-            {
-                _isJumping = true;
-                _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _jumpForce);
-            }
         }
 
         private void SetDirection(float direction)
@@ -58,12 +58,28 @@ namespace Player
             _faceRight = !_faceRight;
         }
 
-        private void JumpReset()
+        public void Jump()
+        {
+            if (!_isJumping)
+            {
+                _isJumping = true;
+                _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _jumpForce);
+            }
+        }
+
+        private void ResetJump()
         {
             if (_rigidbody2D.velocity.y == 0)
             {
                 _isJumping = false;
             }
+        }
+
+        private void UpdateAnimation()
+        {
+            _animator.PlayAnimation(AnimationType.Idle, true);
+            _animator.PlayAnimation(AnimationType.Run, _movement.magnitude > 0);
+            _animator.PlayAnimation(AnimationType.Jump, _isJumping);
         }
     }
 }
