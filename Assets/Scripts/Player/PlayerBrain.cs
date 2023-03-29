@@ -18,6 +18,7 @@ namespace Player
         {
             _playerEntity.MoveHorizontally(GetHorizontalDirection());
             if (IsJump()) _playerEntity.Jump();
+            if (IsFlip()) _playerEntity.Run();
             foreach (var entityInputSource in _inputSources)
             {
                 entityInputSource.ResetOneTimeAction();

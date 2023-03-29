@@ -14,7 +14,7 @@ public class ExternalDevicesInputReader : IEntityInputSource
             Jump = true;
         }
         
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire2"))
         {
             Flip = true;
         }

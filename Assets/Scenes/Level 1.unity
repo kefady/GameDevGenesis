@@ -4388,6 +4388,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 126154864}
   _horizontalSpeed: 8
+  _runSpeed: 2
   _faceRight: 1
   _jumpForce: 13
 --- !u!61 &126154861
