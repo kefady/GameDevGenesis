@@ -30,19 +30,16 @@ namespace Core.Movement.Controller
         public void UpdateFall()
         {
             if (Math.Round(_rigidbody.velocity.y, 3) < 0) IsFalling = true;
-
         }
         
         public void ResetJump()
         {
             if (Math.Round(_rigidbody.velocity.y, 3) == 0) IsJumping = false;
-
         }
 
         public void ResetFall()
         {
             if (Math.Round(_rigidbody.velocity.y, 3) >= 0) IsFalling = false;
-
         }
     }
 }

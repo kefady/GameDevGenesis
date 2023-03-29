@@ -1409,6 +1409,8 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Transform_Rotate_m7EA47AD57F43D478CCB052
 IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void Jumper_set_IsJumping_m2C5712326D8CEEA180E79EBD748AE0B63F8E3219_inline (Jumper_t5BA95E2D626F538558D34B188054C24C64D3A7B2* __this, bool ___0_value, const RuntimeMethod* method) ;
 // System.Single Core.Movement.Data.JumpData::get_JumpForce()
 IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR float JumpData_get_JumpForce_m62AEA00BBA6BE8B93C2291784C37278D9554D111_inline (JumpData_tC2119A0CBD84F68709D556AAC474A3B3792BFA37* __this, const RuntimeMethod* method) ;
+// System.Double System.Math::Round(System.Double,System.Int32)
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR double Math_Round_m0BD20E38C73A9283F2EC89E6DF9CCC80A7752C38_inline (double ___0_value, int32_t ___1_digits, const RuntimeMethod* method) ;
 // System.Void Core.Movement.Controller.Jumper::set_IsFalling(System.Boolean)
 IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void Jumper_set_IsFalling_mB621C8AAC1B6571CADE81CC30AB8DA25E274117F_inline (Jumper_t5BA95E2D626F538558D34B188054C24C64D3A7B2* __this, bool ___0_value, const RuntimeMethod* method) ;
 // T UnityEngine.Component::GetComponent<UnityEngine.Animator>()
@@ -1420,6 +1422,8 @@ inline Animator_t8A52E42AE54F76681838FE9E632683EF3952E883* Component_GetComponen
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Animator_SetInteger_m7B4BB5FD5BD8DE3F713D8E9AD2870C1AAF8E19EF (Animator_t8A52E42AE54F76681838FE9E632683EF3952E883* __this, String_t* ___0_name, int32_t ___1_value, const RuntimeMethod* method) ;
 // System.Void Core.Animation.AnimatorController::.ctor()
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void AnimatorController__ctor_m01D4C93D46DCFC08B245CE088C0B8D81E4994AAC (AnimatorController_tA6B0441AB255A23C190754F0988BC60EC8D6EB6F* __this, const RuntimeMethod* method) ;
+// System.Double System.Math::Round(System.Double,System.Int32,System.MidpointRounding)
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR double Math_Round_m8DB2F61CB73B9E71E54149290ABD5DC8A68890D1 (double ___0_value, int32_t ___1_digits, int32_t ___2_mode, const RuntimeMethod* method) ;
 #ifdef __clang__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
@@ -3663,24 +3667,33 @@ IL_0042:
 // System.Void Core.Movement.Controller.Jumper::UpdateFall()
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Jumper_UpdateFall_mF4B3648D4E62D0933426EABF23A1E0B1AD6FBFD1 (Jumper_t5BA95E2D626F538558D34B188054C24C64D3A7B2* __this, const RuntimeMethod* method) 
 {
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
 	{
-		// if (_rigidbody.velocity.y < 0)
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Math_tEB65DE7CA8B083C412C969C92981C030865486CE_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	{
+		// if (Math.Round(_rigidbody.velocity.y, 3) < 0) IsFalling = true;
 		Rigidbody2D_tBEBE9523CF4448544085AF46BF7E10AA499F320F* L_0 = __this->____rigidbody_1;
 		NullCheck(L_0);
 		Vector2_t1FD6F485C871E832B347AB2DC8CBA08B739D8DF7 L_1;
 		L_1 = Rigidbody2D_get_velocity_mBD8AC6F93F0E24CC41D2361BCEF74F81303720EF(L_0, NULL);
 		float L_2 = L_1.___y_1;
-		if ((!(((float)L_2) < ((float)(0.0f)))))
+		il2cpp_codegen_runtime_class_init_inline(Math_tEB65DE7CA8B083C412C969C92981C030865486CE_il2cpp_TypeInfo_var);
+		double L_3;
+		L_3 = Math_Round_m0BD20E38C73A9283F2EC89E6DF9CCC80A7752C38_inline(((double)L_2), 3, NULL);
+		if ((!(((double)L_3) < ((double)(0.0)))))
 		{
-			goto IL_001e;
+			goto IL_0029;
 		}
 	}
 	{
-		// IsFalling = true;
+		// if (Math.Round(_rigidbody.velocity.y, 3) < 0) IsFalling = true;
 		Jumper_set_IsFalling_mB621C8AAC1B6571CADE81CC30AB8DA25E274117F_inline(__this, (bool)1, NULL);
 	}
 
-IL_001e:
+IL_0029:
 	{
 		// }
 		return;
@@ -3689,24 +3702,33 @@ IL_001e:
 // System.Void Core.Movement.Controller.Jumper::ResetJump()
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Jumper_ResetJump_mEDCB2D428C13E12E1788AD5D96C1F3AE849B0744 (Jumper_t5BA95E2D626F538558D34B188054C24C64D3A7B2* __this, const RuntimeMethod* method) 
 {
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
 	{
-		// if (_rigidbody.velocity.y == 0)
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Math_tEB65DE7CA8B083C412C969C92981C030865486CE_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	{
+		// if (Math.Round(_rigidbody.velocity.y, 3) == 0) IsJumping = false;
 		Rigidbody2D_tBEBE9523CF4448544085AF46BF7E10AA499F320F* L_0 = __this->____rigidbody_1;
 		NullCheck(L_0);
 		Vector2_t1FD6F485C871E832B347AB2DC8CBA08B739D8DF7 L_1;
 		L_1 = Rigidbody2D_get_velocity_mBD8AC6F93F0E24CC41D2361BCEF74F81303720EF(L_0, NULL);
 		float L_2 = L_1.___y_1;
-		if ((!(((float)L_2) == ((float)(0.0f)))))
+		il2cpp_codegen_runtime_class_init_inline(Math_tEB65DE7CA8B083C412C969C92981C030865486CE_il2cpp_TypeInfo_var);
+		double L_3;
+		L_3 = Math_Round_m0BD20E38C73A9283F2EC89E6DF9CCC80A7752C38_inline(((double)L_2), 3, NULL);
+		if ((!(((double)L_3) == ((double)(0.0)))))
 		{
-			goto IL_001e;
+			goto IL_0029;
 		}
 	}
 	{
-		// IsJumping = false;
+		// if (Math.Round(_rigidbody.velocity.y, 3) == 0) IsJumping = false;
 		Jumper_set_IsJumping_m2C5712326D8CEEA180E79EBD748AE0B63F8E3219_inline(__this, (bool)0, NULL);
 	}
 
-IL_001e:
+IL_0029:
 	{
 		// }
 		return;
@@ -3715,24 +3737,33 @@ IL_001e:
 // System.Void Core.Movement.Controller.Jumper::ResetFall()
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Jumper_ResetFall_m7B581CE2BBBDA0E9D2AAF8B8AF80D610E6D6DCCE (Jumper_t5BA95E2D626F538558D34B188054C24C64D3A7B2* __this, const RuntimeMethod* method) 
 {
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
 	{
-		// if (_rigidbody.velocity.y >= 0)
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Math_tEB65DE7CA8B083C412C969C92981C030865486CE_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	{
+		// if (Math.Round(_rigidbody.velocity.y, 3) >= 0) IsFalling = false;
 		Rigidbody2D_tBEBE9523CF4448544085AF46BF7E10AA499F320F* L_0 = __this->____rigidbody_1;
 		NullCheck(L_0);
 		Vector2_t1FD6F485C871E832B347AB2DC8CBA08B739D8DF7 L_1;
 		L_1 = Rigidbody2D_get_velocity_mBD8AC6F93F0E24CC41D2361BCEF74F81303720EF(L_0, NULL);
 		float L_2 = L_1.___y_1;
-		if ((!(((float)L_2) >= ((float)(0.0f)))))
+		il2cpp_codegen_runtime_class_init_inline(Math_tEB65DE7CA8B083C412C969C92981C030865486CE_il2cpp_TypeInfo_var);
+		double L_3;
+		L_3 = Math_Round_m0BD20E38C73A9283F2EC89E6DF9CCC80A7752C38_inline(((double)L_2), 3, NULL);
+		if ((!(((double)L_3) >= ((double)(0.0)))))
 		{
-			goto IL_001e;
+			goto IL_0029;
 		}
 	}
 	{
-		// IsFalling = false;
+		// if (Math.Round(_rigidbody.velocity.y, 3) >= 0) IsFalling = false;
 		Jumper_set_IsFalling_mB621C8AAC1B6571CADE81CC30AB8DA25E274117F_inline(__this, (bool)0, NULL);
 	}
 
-IL_001e:
+IL_0029:
 	{
 		// }
 		return;
@@ -4048,6 +4079,23 @@ IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR float JumpData_get_JumpForce_m62A
 		// [field: SerializeField] public float JumpForce { get; private set; }
 		float L_0 = __this->___U3CJumpForceU3Ek__BackingField_0;
 		return L_0;
+	}
+}
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR double Math_Round_m0BD20E38C73A9283F2EC89E6DF9CCC80A7752C38_inline (double ___0_value, int32_t ___1_digits, const RuntimeMethod* method) 
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Math_tEB65DE7CA8B083C412C969C92981C030865486CE_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	{
+		double L_0 = ___0_value;
+		int32_t L_1 = ___1_digits;
+		il2cpp_codegen_runtime_class_init_inline(Math_tEB65DE7CA8B083C412C969C92981C030865486CE_il2cpp_TypeInfo_var);
+		double L_2;
+		L_2 = Math_Round_m8DB2F61CB73B9E71E54149290ABD5DC8A68890D1(L_0, L_1, 0, NULL);
+		return L_2;
 	}
 }
 IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void Jumper_set_IsFalling_mB621C8AAC1B6571CADE81CC30AB8DA25E274117F_inline (Jumper_t5BA95E2D626F538558D34B188054C24C64D3A7B2* __this, bool ___0_value, const RuntimeMethod* method) 
