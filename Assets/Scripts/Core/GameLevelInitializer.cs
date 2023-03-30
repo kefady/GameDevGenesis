@@ -4,6 +4,7 @@ using Core.Services.Updater;
 using InputReader;
 using Player;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Core
 {
@@ -11,6 +12,7 @@ namespace Core
     {
         [SerializeField] private PlayerEntity _playerEntity;
         [SerializeField] private GameUIInputView _gameUIInputView;
+        [SerializeField] private float _minVerticalPosition;
 
         private ExternalDevicesInputReader _externalDevicesInput;
         private PlayerSystem _playerSystem;
@@ -35,6 +37,7 @@ namespace Core
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Escape)) _projectUpdater.IsPaused = !_projectUpdater.IsPaused;
+            if (_playerEntity.CurrentVerticalPosition <= _minVerticalPosition || _playerEntity.Health <= 0) RestartLevel();
         }
 
         private void OnDestroy()
@@ -43,6 +46,12 @@ namespace Core
             {
                 disposable.Dispose();
             }
+        }
+
+        private void RestartLevel()
+        {
+            _playerEntity.transform.position = new Vector3(-11, 6.5f, 0);
+            _playerEntity.UpdateHealth();
         }
     }
 }
